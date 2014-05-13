@@ -11,7 +11,7 @@
 <meta name="description" content="" />
 <meta name="keywords" content="" />
  
-<title>RunFor - Área do Aluno - <?php echo $title; ?></title>
+<title>RunFor - Área do Aluno - <?php echo $data['title']; ?></title>
 </head>
 <body>
     <div class="main-content">

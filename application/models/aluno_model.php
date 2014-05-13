@@ -31,9 +31,23 @@ class Aluno_model extends CI_Model {
         $this->load->helper('security');
     }
     
-    public function add_aluno(){
-    	$data = array();
-    	return $this->db->insert('aluno_model', $data);
+    public function save_aluno(){
+    	$data = array(
+            'nome' => $this->input->post('nome'),
+            'email' => $this->input->post('email'),
+            'senha' => do_hash($this->input->post('nome')),
+            'ativo' => false,
+            'endereco' => $this->input->post('endereco'),
+            'bairro' => $this->input->post('bairro'),
+            'complemento' => $this->input->post('complemento'),
+            'cidade' => $this->input->post('cidade'),
+            'estado' => $this->input->post('estado'),
+            'telefone' => $this->input->post('telefone'),
+            'dataNascimento' => $this->input->post('dataNascimento')
+        );
+        var_dump($data);
+    	//return $this->db->insert('alunos', $data);
+        return false;
     }
     
     public function get_aluno_by_credentials($login, $senha){
@@ -45,7 +59,5 @@ class Aluno_model extends CI_Model {
         );
 	    return $query->row_array();
     }
+
 }
-
-
-?>

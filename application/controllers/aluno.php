@@ -18,10 +18,14 @@ class Aluno extends CI_Controller {
     public function loginPost(){
         $this->load->helper('form');
     	$this->load->library('form_validation');
-        
+
         $this->form_validation->set_rules('usuario', 'Usuário', 'required');
 	    $this->form_validation->set_rules('senha', 'Senha', 'required');
-	    
+
+        $usuario = $this->input->post('usuario');
+        $senha = $this->input->post('senha');
+
+
 	    $aluno = $this->aluno_model->get_aluno_by_credentials($usuario, $senha);
 	    
 	    $view = "";
@@ -60,7 +64,20 @@ class Aluno extends CI_Controller {
     
     /** Mesmo Post pros dois Casos */
     public function form_post(){
-        
+        $this->load->view('templates/header');
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('nome', 'Usuário', 'required');
+        $this->form_validation->set_rules('email', 'E-Mail', 'required');
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('aluno/user_form');
+        } else {
+            $this->aluno_model->save_aluno();
+            $this->load->view('aluno/add_success');
+        }
+        $this->load->view('templates/footer');
     }
     
     /** Após o login */

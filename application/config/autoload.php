@@ -64,7 +64,7 @@ $autoload['libraries'] = array('session','database', 'form_validation');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array();
+$autoload['helper'] = array('form');
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array();
+$autoload['model'] = array('aluno_model');
 
 
 /* End of file autoload.php */
