@@ -1,0 +1,1 @@
+Obrigado pelo seu cadastro! Em breve estaremos ativando seu cadastro e você poderá disfrutar dos recursos do RunFor!
