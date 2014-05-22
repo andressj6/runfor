@@ -4,6 +4,8 @@ class Aluno extends CI_Controller {
     
     public function __construct() {
 		parent::__construct();
+
+        $this->form_validation->set_error_delimiters('<div class="alert-warning">', '</div>');
 	}
 	
 	/** Logins */
@@ -15,31 +17,33 @@ class Aluno extends CI_Controller {
 		$this->load->view('templates/footer');
 	}
     
-    public function loginPost(){
+    public function login_post(){
         $this->load->helper('form');
     	$this->load->library('form_validation');
 
-        $this->form_validation->set_rules('usuario', 'Usuário', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required');
 	    $this->form_validation->set_rules('senha', 'Senha', 'required');
 
-        $usuario = $this->input->post('usuario');
+        $email = $this->input->post('email');
         $senha = $this->input->post('senha');
-
-
-	    $aluno = $this->aluno_model->get_aluno_by_credentials($usuario, $senha);
-	    
 	    $view = "";
-	    if(!$aluno){
-	        $data['error'] = "Usuário o Senha Inválidos";
-	        $view = "aluno/login_form";
-	    } else {
-	        $aluno['logged_in'] = true;
-	        $this->session->set_userdata($aluno);
-	        $view = "aluno/home";
-	    }
+        if($this->form_validation->run() === FALSE){
+            $view = "aluno/login_form";
+        } else {
+            $aluno = $this->aluno_model->get_aluno_by_credentials($email, $senha);
+            if(!$aluno){
+                $data['error'] = "Email o Senha Inválidos";
+                $view = "aluno/login_form";
+            } else {
+                $aluno['logged_in'] = true;
+                $this->session->set_userdata($aluno);
+                $data['aluno'] = $aluno['nome'];
+                $view = "aluno/index";
+            }
+        }
 	    
 	    $this->load->view('templates/header');
-        $this->load->view($view);
+        $this->load->view($view, $data);
 		$this->load->view('templates/footer');
     }
     
