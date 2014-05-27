@@ -61,4 +61,23 @@ class Aluno_model extends CI_Model {
 	    return $aluno;
     }
 
+    public function get_all(){
+        $query = $this->db->get("alunos");
+        return $query->result_array();
+    }
+
+    public function activate_aluno($id){
+        $this->db->update('alunos',array('ativo'=> true), array('id' => $id));
+        return true;
+    }
+
+    public function get_aluno_by_id($id){
+        $query = $this->db->get_where('alunos', array ('id' => $id));
+        $aluno = $query->row_array();
+        if(!$aluno){
+            throw new Exception();
+        }
+        return $aluno;
+    }
+
 }
