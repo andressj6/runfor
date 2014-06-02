@@ -59,9 +59,6 @@ class Admin extends CI_Controller {
             $error = $this->upload->display_errors();
             $aluno = $this->aluno_model->get_aluno_by_id($idAluno);
 
-
-
-
             $this->load->view("templates/header");
             $this->load->view("admin/ver_aluno",
                 array('aluno' => $aluno, 'error' => $error)
@@ -75,9 +72,17 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function addTreino() {
-
+    public function avaliar_aluno() {
+        $id = $this->uri->segment(3); #admin/ver_aluno/$id
+        $aluno = $this->aluno_model->get_aluno_by_id($id);
+        $this->load->view("templates/header");
+        $this->load->view("admin/avaliar_aluno",
+            array('aluno' => $aluno, 'error' => "")
+        );
+        $this->load->view("templates/footer");
     }
+
+
 
 }
 

@@ -5,6 +5,7 @@
             <th>Email</th>
             <th>Ativo</th>
             <th>Ver</th>
+            <th>Adicionar Avaliação</th>
             <th>Desativar</th>
         </tr>
     </thead>
@@ -13,7 +14,8 @@
         <td><?php echo $aluno['nome']; ?></td>
         <td><?php echo $aluno['email']; ?></td>
         <td><?php echo ($aluno['ativo'] ? 'Sim' : 'Não'); ?></td>
-        <td><?php echo anchor("/admin/ver_aluno/".$aluno['id'], "Ver") ?></td>
+        <td><?php echo anchor("/admin/ver_aluno/".$aluno['id'], "Ver"); ?></td>
+    <td><?php echo anchor("/admin/avaliar_aluno/".$aluno['id'], "Avaliar"); ?></td>
         <td><?php echo "Desativar"?></td>
     </tr>
 

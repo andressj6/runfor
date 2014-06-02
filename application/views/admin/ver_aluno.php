@@ -9,5 +9,17 @@ Treino atual:
 Enviar Treino: <input type="file" name="treino" size="20" />
 <input type="hidden" name="id_aluno" value="<?php echo $aluno['id']; ?>" />
 <input type="submit" value="upload" />
+<hr/>
+Presenças: <br />
+
+<table>
+    <thead>
+
+    </thead>
+    <tbody>
+        <?php foreach($aluno['presencas'] as $presenca):?>
+        <?php endforeach; ?>
+    </tbody>
+</table>
 
 </form>

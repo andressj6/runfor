@@ -77,7 +77,14 @@ class Aluno_model extends CI_Model {
         if(!$aluno){
             throw new Exception();
         }
+        $aluno['presencas'] = $this->get_presencas_aluno($id);
         return $aluno;
+    }
+
+    public function get_presencas_aluno($id){
+        $query = $this->db->get_where('presencas_alunos', array('aluno_id' => $id));
+        $presencas = $query->result_array();
+        return $presencas;
     }
 
 }
