@@ -7,15 +7,28 @@ class Admin extends CI_Controller {
     }
 
     public function login(){
-
+        $this->load->view("templates/header");
+        $this->load->view("admin/login");
+        $this->load->view("templates/footer");
     }
 
     public function login_post(){
 
-        $data['alunos'] = $this->aluno_model->get_all();
+        $login = $this->input->post('login');
+        $senha = do_hash($this->input->post('senha'));
+
+        $query = $this->db->get_where('admin_users', array ('login' => $login, 'senha' => $senha));
+        $adminUser = $query->row_array();
 
         $this->load->view("templates/header");
-        $this->load->view("admin/list_alunos",$data);
+        if(!$adminUser) {
+            $data = array ('error' => 'Usuário ou senha Inválidos');
+            $this->load->view("admin/login", $data);
+        } else {
+            $data['alunos'] = $this->aluno_model->get_all();
+            $this->load->view("admin/list_alunos",$data);
+        }
+
         $this->load->view("templates/footer");
     }
 
@@ -80,6 +93,31 @@ class Admin extends CI_Controller {
             array('aluno' => $aluno, 'error' => "")
         );
         $this->load->view("templates/footer");
+    }
+
+    public function editar_avaliacao() {
+        $id = $this->uri->segment(3); #admin/editar_avaliacao/$id_avaliacao
+
+        $avaliacao = $this->avaliacao_model->get_by_id($id);
+
+        $aluno = $this->aluno_model->get_aluno_by_id($avaliacao['aluno_id']);
+        $this->load->view("templates/header");
+        $this->load->view("admin/avaliar_aluno",
+            array('aluno' => $aluno, 'error' => "", 'avaliacao' => $avaliacao)
+        );
+        $this->load->view("templates/footer");
+    }
+
+    public function save_avaliacao(){
+        $tipo = $this->input->post('tipo_avaliacao');
+        if($tipo == 0) {
+            echo "3200";
+        } else {
+            echo "Soccer";
+        }
+
+        $post_content = $this->input->post();
+        var_dump($post_content);
     }
 
 

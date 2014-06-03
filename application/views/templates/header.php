@@ -23,4 +23,4 @@
 </head>
 <body>
     <div class="main-content">
-        <h1>RunFor - Área do Aluno</h1>
+        <h1>RunFor</h1>

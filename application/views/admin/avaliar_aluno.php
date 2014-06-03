@@ -20,6 +20,12 @@
 </script>
 
 <?php echo form_open('admin/save_avaliacao'); ?>
+<input type="hidden" name="aluno_id" value="<?php echo $aluno['id']; ?>"/>
+<?php if(isset($avaliacao)): ?>
+<input type="hidden" name="avaliacao_id" value="<?php echo $avaliacao['id']; ?>" />
+<?php endif; ?>
+
+
 Nome: <?php echo $aluno['nome']; ?> <br/>
 <hr/>
 Tipo de Avaliação:
@@ -56,7 +62,4 @@ Tipo de Avaliação:
 
 <input type="submit" value="Enviar Avaliação" class="btn btn-success" />
 
-<div class="form-group form-soccer">
-
-</div>
 </form>
