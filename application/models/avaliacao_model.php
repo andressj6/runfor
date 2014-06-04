@@ -8,12 +8,14 @@ class Avaliacao_model extends CI_Model {
 
     /**
      * @param $idAluno
+     * @return array
      */
     public function get_avaliacoes_by_aluno($idAluno){
-        $query_avaliacoes = $this->db->query('avaliacoes_aluno', array('aluno_id' => $idAluno));
-        $avaliacoes = array();
+        $query_avaliacoes = $this->db->get_where('avaliacao_alunos', array('aluno_id' => $idAluno));
+        $avaliacoes = array('3200' => array(), 'soccer' => array());
         foreach($query_avaliacoes->result_array() as $avaliacao){
-            array_push($avaliacoes, $this->get_resultados_avaliacao($avaliacao));
+            array_push($avaliacoes[$avaliacao['tipo_avaliacao'] == 0 ? '3200' : 'soccer'],
+                $this->get_resultados_avaliacao($avaliacao));
         }
         return $avaliacoes;
     }
@@ -39,7 +41,8 @@ class Avaliacao_model extends CI_Model {
     private function get_resultados_avaliacao_soccer($avaliacao) {
         $avaliacao_processada = array();
         #distancia: =(INT(estagio)*240)+(estagio-INT(B5))*600
-
+        $avaliacao_processada['estagio'] = $avaliacao['soccer_estagio'];
+        $avaliacao_processada['frequencia'] = $avaliacao['soccer_frequencia'];
         $avaliacao_processada['distancia'] = ((int) $avaliacao['soccer_estagio'] * 240) + (($avaliacao['soccer_estagio'] - (int) $avaliacao['soccer_estagio'])*600);
         #velocidade: (int) estagio + 8
         $avaliacao_processada['velocidade'] = ((int) $avaliacao['soccer_estagio']) + 8;
@@ -57,7 +60,7 @@ class Avaliacao_model extends CI_Model {
     private function get_resultados_avaliacao_3200($avaliacao) {
         $avaliacao_processada = array();
         $tempo = $avaliacao['3200_tempo'];
-
+        $avaliacao_processada['tempo'] = $tempo;
         #velMax = 3200 / tempo / 16.7
         $avaliacao_processada['velMax']  = 3200 / $tempo / 16.7;
         #velMaxMetros 3200/tempo

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>RunFor - Área do Aluno</title>
+    <title>RunFor </title>
 
     <!-- Bootstrap -->
     <link href="/runfor/css/bootstrap.min.css" rel="stylesheet">
@@ -22,5 +22,36 @@
     <script src="/runfor/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <?php
+        $admin_info = $this->session->userdata('admin_info');
+        $is_admin = strpos($this->uri->uri_string(),'admin') > -1;
+        if(!$is_admin || (!isset($admin_info) || $admin_info['logged_in'] == FALSE)) :
+    ?>
+    <?php else :?>
+    <style type="text/css">
+        body {
+            padding-top: 50px;
+        }
+    </style>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">RunFor</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><?php echo anchor('/admin/listar_alunos', "Alunos"); ?></li>
+                    <li><?php echo anchor('/admin/logout', 'Logout'); ?></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+    <?php endif; ?>
+
     <div class="main-content">
         <h1>RunFor</h1>

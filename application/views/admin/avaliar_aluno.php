@@ -47,7 +47,7 @@ Tipo de Avaliação:
 
 <div class="form-group form-3200">
     <label for="tempo ">Tempo: </label>
-    <input type="number" name="tempo-3200" />
+    <input type="number" name="tempo_3200" />
 </div>
 <div class="form-group form-soccer">
     <label for="soccer_estagio">Estágio:</label>

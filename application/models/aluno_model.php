@@ -66,10 +66,16 @@ class Aluno_model extends CI_Model {
         return $query->result_array();
     }
 
-    public function activate_aluno($id){
-        $this->db->update('alunos',array('ativo'=> true), array('id' => $id));
+    public function ativar_aluno($id){
+        $this->db->update('alunos',array('ativo'=> TRUE), array('id' => $id));
         return true;
     }
+
+    public function desativar_aluno($id){
+        $this->db->update('alunos',array('ativo'=> FALSE), array('id' => $id));
+        return true;
+    }
+
 
     public function get_aluno_by_id($id){
         $query = $this->db->get_where('alunos', array ('id' => $id));
@@ -78,6 +84,7 @@ class Aluno_model extends CI_Model {
             throw new Exception();
         }
         $aluno['presencas'] = $this->get_presencas_aluno($id);
+        $aluno['avaliacoes'] = $this->avaliacao_model->get_avaliacoes_by_aluno($id);
         return $aluno;
     }
 
