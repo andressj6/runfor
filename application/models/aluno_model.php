@@ -37,13 +37,17 @@ class Aluno_model extends CI_Model {
             'email' => $this->input->post('email'),
             'senha' => do_hash($this->input->post('nome')),
             'ativo' => false,
-            'endereco' => $this->input->post('endereco'),
-            'bairro' => $this->input->post('bairro'),
-            'complemento' => $this->input->post('complemento'),
-            'cidade' => $this->input->post('cidade'),
-            'estado' => $this->input->post('estado'),
-            'telefone' => $this->input->post('telefone')
-            #'dataNascimento' => $this->input->post('dataNascimento')
+            'data_nascimento' => $this->input->post('dataNascimento'),
+            'telefone' => $this->input->post('telefone'),
+            'atividade_fisica' => $this->input->post('atividade_fisica'),
+            'refeicoes' => $this->input->post('refeicoes'),
+            'dieta' => $this->input->post('dieta'),
+            'dormir' => $this->input->post('dormir'),
+            'fumante' => $this->input->post('fumante'),
+            'cardiaco' => $this->input->post('cardiaco'),
+            'medicamento' => $this->input->post('medicamento'),
+            'cirurgia' => $this->input->post('cirurgia'),
+            'dores' => $this->input->post('dores')
         );
     	return $this->db->insert('alunos', $data);
         return false;
@@ -92,6 +96,15 @@ class Aluno_model extends CI_Model {
         $query = $this->db->get_where('presencas_alunos', array('aluno_id' => $id));
         $presencas = $query->result_array();
         return $presencas;
+    }
+
+    public function add_presenca($idAluno){
+        $data = array (
+            'aluno_id' => $idAluno,
+            'data_presenca' => date("Y-m-d", time())
+        );
+        $query = $this->db->insert('presencas_alunos', $data);
+        return $data;
     }
 
 }

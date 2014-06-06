@@ -2,9 +2,9 @@
 
 <?php echo validation_errors(); ?>
 
-<?php if($error) : ?>
+<?php if(!empty($error)) : ?>
 <div class="alert alert-danger">
-    Usuário e/ou Senha Inválidos
+    <?php echo $error; ?>
 </div>
 <?php endif; ?>
 
@@ -20,3 +20,4 @@
 	<input type="submit" name="submit" value="Entrar" />
 
 </form>
+<a href="<?php echo site_url('aluno/novo'); ?>">Cadastre-Se!</a>

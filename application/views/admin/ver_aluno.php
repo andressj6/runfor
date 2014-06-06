@@ -1,11 +1,29 @@
-
 <h3>Ver Aluno</h3>
+<?php if(!empty($error)):?>
+    <div class="alert alert-warning"><?php echo $error; ?></div>
+<?php endif;?>
+
+<?php if(!empty($mensagem)):?>
+    <div class="alert alert-success"><?php echo $mensagem; ?></div>
+<?php endif;?>
 Nome: <?php echo $aluno['nome']; ?> <br/>
+Email: <?php echo $aluno['email']; ?> <br/>
+Telefone: <?php echo $aluno['telefone']; ?> <br/>
+Pratica Atividade Fisica: <?php echo $aluno['atividade_fisica']; ?> <br/>
+Refeições diárias: <?php echo $aluno['refeicoes']; ?> <br/>
+Dieta: <?php echo $aluno['dieta']; ?> <br/>
+Horas de Sono diárias: <?php echo $aluno['dormir']; ?> <br/>
+Fuma/Bebe: <?php echo $aluno['fumante']; ?> <br/>
+Problemas Cardíacos: <?php echo $aluno['cardiaco']; ?> <br/>
+Medicamentos: <?php echo $aluno['medicamento']; ?> <br/>
+Cirurgias: <?php echo $aluno['cirurgia']; ?> <br/>
+Dores: <?php echo $aluno['dores']; ?>
+
 <h3>Treino atual:</h3>
 
 <img src="<?php echo base_url("/images/treinos/".$aluno['id']);?>.png" /><br/>
 
-<?php echo $error;?>
+
 <?php echo form_open_multipart('admin/upload_treino');?>
 <div class="form-group">
     <label for="treino"></label> <input type="file" name="treino" size="20" />
@@ -18,17 +36,11 @@ Nome: <?php echo $aluno['nome']; ?> <br/>
 <h2>Ultimas 5 Presenças: </h2><br />
 
 </form>
-<table>
-    <thead>
-    </thead>
-    <tbody>
     <?php foreach($aluno['presencas'] as $presenca):?>
-        <tr>
-            <td><?php echo date('d/m/Y', $presenca); ?></td>
-        </tr>
+        <ul>
+            <li><?php echo date('d/m/Y', strtotime($presenca['data_presenca'])); ?></li>
+        </ul>
     <?php endforeach; ?>
-    </tbody>
-</table>
 <hr/>
 
 <h2>Ultimas 5 Avaliações 3200M:</h2>
@@ -42,6 +54,8 @@ Nome: <?php echo $aluno['nome']; ?> <br/>
         <th>Vel. Max Sem Correção</th>
         <th>PACE</th>
         <th>VO<sup>2</sup> Max.</th>
+        <th>Editar</th>
+        <th>Remover</th>
     </tr>
     </thead>
     <tbody>
@@ -53,6 +67,8 @@ Nome: <?php echo $aluno['nome']; ?> <br/>
             <td><?php echo $avaliacao['velMaxSemCorrecao']; ?> </td>
             <td><?php echo $avaliacao['pace']; ?> </td>
             <td><?php echo $avaliacao['vo2max']; ?> </td>
+            <td><?php echo anchor('admin/editar_avaliacao/'.$avaliacao['id'], "Editar"); ?></td>
+            <td><?php echo anchor('admin/remover_avaliacao/'.$avaliacao['id'], "Excluir"); ?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>
@@ -69,6 +85,8 @@ Nome: <?php echo $aluno['nome']; ?> <br/>
         <th>Velocidade</th>
         <th>VO<sup>2</sup> Max</th>
         <th>Met. Max</th>
+        <th>Editar</th>
+        <th>Remover</th>
     </tr>
     </thead>
     <tbody>
@@ -80,7 +98,11 @@ Nome: <?php echo $aluno['nome']; ?> <br/>
             <td><?php echo $avaliacao['velocidade']; ?></td>
             <td><?php echo $avaliacao['vo2max']; ?></td>
             <td><?php echo $avaliacao['metMax']; ?></td>
+            <td><?php echo anchor('admin/editar_avaliacao/'.$avaliacao['id'], "Editar"); ?></td>
+            <td><?php echo anchor('admin/remover_avaliacao/'.$avaliacao['id'], "Excluir"); ?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>
 </table>
+
+<a href="<?php echo site_url("admin/avaliar_aluno/".$aluno['id']); ?>" class="btn btn-success">Avaliar Aluno</a>

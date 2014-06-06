@@ -23,7 +23,10 @@ class Avaliacao_model extends CI_Model {
 
     public function get_by_id($avaliacao_id){
         $query = $this->db->get_where('avaliacao_alunos', array ('id' => $avaliacao_id));
-        return $query->result_array();
+        $res = $query->row_array();
+        $res['data_avaliacao'] = date('d/m/y', strtotime($res['data_avaliacao']));
+        return $res;
+
     }
 
     private function get_resultados_avaliacao($avaliacao){
@@ -40,6 +43,7 @@ class Avaliacao_model extends CI_Model {
      */
     private function get_resultados_avaliacao_soccer($avaliacao) {
         $avaliacao_processada = array();
+        $avaliacao_processada['id'] = $avaliacao['id'];
         #distancia: =(INT(estagio)*240)+(estagio-INT(B5))*600
         $avaliacao_processada['estagio'] = $avaliacao['soccer_estagio'];
         $avaliacao_processada['frequencia'] = $avaliacao['soccer_frequencia'];
@@ -59,6 +63,7 @@ class Avaliacao_model extends CI_Model {
      */
     private function get_resultados_avaliacao_3200($avaliacao) {
         $avaliacao_processada = array();
+        $avaliacao_processada['id'] = $avaliacao['id'];
         $tempo = $avaliacao['3200_tempo'];
         $avaliacao_processada['tempo'] = $tempo;
         #velMax = 3200 / tempo / 16.7

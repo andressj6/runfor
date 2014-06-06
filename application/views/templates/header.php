@@ -26,8 +26,33 @@
         $admin_info = $this->session->userdata('admin_info');
         $is_admin = strpos($this->uri->uri_string(),'admin') > -1;
         if(!$is_admin || (!isset($admin_info) || $admin_info['logged_in'] == FALSE)) :
+            $aluno_info = $this->session->userdata('aluno');
+            if(!empty($aluno_info) && $aluno_info['logged_in'] == TRUE):
     ?>
-    <?php else :?>
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Menu</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">RunFor</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><?php echo anchor('/aluno/calendario', "Calendário"); ?></li>
+                        <li class="active"><?php echo anchor('/aluno/ver_treino', "Treinos"); ?></li>
+                        <li class="active"><?php echo anchor('/aluno/ver_avaliacoes', "Avaliações"); ?></li>
+                        <li class="active"><?php echo anchor('/aluno/logout', 'Logout'); ?></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+    <?php endif;
+        else :?>
     <style type="text/css">
         body {
             padding-top: 50px;

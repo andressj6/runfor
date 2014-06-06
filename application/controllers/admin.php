@@ -158,6 +158,13 @@ class Admin extends CI_Controller {
         } else {
             $this->avaliacao_model->salvar_avaliacao_soccer($data['aluno_id'], $data['soccer_estagio'], $data['soccer_frequencia'], $id_avaliacao);
         }
+        $aluno = $this->aluno_model->get_aluno_by_id($data['aluno_id']);
+        $this->load->view("templates/header");
+        $this->load->view("admin/ver_aluno",
+            array('aluno' => $aluno, 'mensagem' => "Avaliação Editada com Sucesso")
+        );
+        $this->load->view("templates/footer");
+
 
     }
 

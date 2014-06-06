@@ -1,6 +1,9 @@
+<?php
+#date_default_timezone_set('America/Sao_Paulo');
+?>
 <style type="text/css">
     .form-soccer {
-        display: none;
+        /*display: none;*/
     }
 
 </style>
@@ -28,35 +31,33 @@
 
 Nome: <?php echo $aluno['nome']; ?> <br/>
 <hr/>
-Tipo de Avaliação:
 <div class="form-group">
-    <label for="data_avaliacao">Data:</label>
-    <input type="date" name="data_avaliacao" class="form-control"/>
+    <label for="data_avaliacao">Data: <?php ?> </label> <?php if(isset($avaliacao)): echo $avaliacao['data_avaliacao']; else: echo date("d/m/Y", time()); endif;?>
 </div>
 <!-- tipos de avaliação -->
-<div class="radio">
+<div class="radio" <?php if(isset($avaliacao) && $avaliacao['tipo_avaliacao'] == 1): ?>style="display: none;"<?php endif; ?>>
     <label>
-        <input type="radio" name="tipo_avaliacao" id="optionsRadios1" class="radio_tipo" value="0" checked>3200 Metros
+        <input type="radio" name="tipo_avaliacao" id="optionsRadios1" class="radio_tipo" value="0" <?php if(!isset($avaliacao) || $avaliacao['tipo_avaliacao'] == 0): ?>checked<?php endif; ?>>3200 Metros
     </label>
 </div>
-<div class="radio">
+<div class="radio" <?php if(isset($avaliacao) && $avaliacao['tipo_avaliacao'] == 0): ?>style="display: none" <?php endif; ?>>
     <label>
-        <input type="radio" name="tipo_avaliacao" id="optionsRadios2" value="1" class="radio_tipo">Soccer Test
+        <input type="radio" name="tipo_avaliacao" id="optionsRadios2" value="1" class="radio_tipo" <?php if(isset($avaliacao) && $avaliacao['tipo_avaliacao'] == 1): ?>checked<?php endif; ?>>Soccer Test
     </label>
 </div>
 
-<div class="form-group form-3200">
+<div class="form-group form-3200" <?php if(isset($avaliacao) && $avaliacao['tipo_avaliacao'] == 1): ?>style="display: none;"<?php endif;?>>
     <label for="tempo ">Tempo: </label>
-    <input type="number" name="tempo_3200" />
+    <input type="text" name="3200_tempo" value="<?php if(isset($avaliacao) && $avaliacao['tipo_avaliacao'] == 1): echo $avaliacao['3200_tempo']; endif;?>" />
 </div>
-<div class="form-group form-soccer">
+<div class="form-group form-soccer" <?php if(isset($avaliacao) && $avaliacao['tipo_avaliacao'] == 1): ?>style="display: block;"<?php else: ?> style="display: none;"<?php endif;?>>
     <label for="soccer_estagio">Estágio:</label>
-    <input type="number" name="soccer_estagio" class="form-control"/>
+    <input type="text" name="soccer_estagio" class="form-control" value="<?php if(isset($avaliacao) && $avaliacao['tipo_avaliacao'] == 1): echo $avaliacao['soccer_estagio']; endif;?>"/>
 </div>
 
-<div class="form-group form-soccer">
+<div class="form-group form-soccer" <?php if(isset($avaliacao) && $avaliacao['tipo_avaliacao'] == 1): ?>style="display: block;"<?php else: ?> style="display: none;"<?php endif;?>>
     <label for="soccer_frequencia">Frequência Cardíaca</label>
-    <input type="number" name="soccer_frequencia" class="form-control"/>
+    <input type="text" name="soccer_frequencia" class="form-control" value="<?php if(isset($avaliacao) && $avaliacao['tipo_avaliacao'] == 1): echo $avaliacao['soccer_frequencia']; endif;?>"/>
 </div>
 
 
