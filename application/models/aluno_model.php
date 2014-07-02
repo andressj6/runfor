@@ -92,6 +92,12 @@ class Aluno_model extends CI_Model {
         return $aluno;
     }
 
+    public function get_aluno_by_email($email){
+        $query = $this->db->get_where('alunos', array('email' => $email));
+        $aluno = $query->row_array();
+        return isset($aluno) ? $aluno : NULL;
+    }
+
     public function get_presencas_aluno($id){
         $query = $this->db->get_where('presencas_alunos', array('aluno_id' => $id));
         $presencas = $query->result_array();
@@ -105,6 +111,44 @@ class Aluno_model extends CI_Model {
         );
         $query = $this->db->insert('presencas_alunos', $data);
         return $data;
+    }
+
+    public function validate_email($email){
+        if(empty($email)){
+            return false;
+        }
+        $data = array (
+            'email' => $email
+        );
+        $query = $this->db->get_where('alunos', $data);
+        return empty($query->row_array());
+    }
+
+    public function send_recovery_email($email){
+        $novaSenha = random_string('alnum', 12);
+        $aluno = $this->get_aluno_by_email($email);
+        $mensagem = <<<EOT
+Olá!
+
+Você está recebendo essa mensagem porque uma nova senha foi solicitada.
+Sua nova senha de acesso é $novaSenha. Você deve mudá-la imediatamente para uma senha de sua escolha.
+Obrigado!
+
+Equipe Runfor
+EOT;
+
+        $this->load->library('email');
+        $this->email->from('noreply@runfor.net.br', 'Runfor');
+        $this->email->to($email);
+        $this->email->subject('Runfor - Recuperar Senha');
+        $this->email->message($mensagem);
+        $this->email->send();
+
+        $data = array('senha' => do_hash($novaSenha));
+        $query = $this->db->update('alunos',$data,array( "id" => $aluno['id']));
+
+
+
     }
 
 }

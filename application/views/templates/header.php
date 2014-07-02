@@ -38,15 +38,17 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">RunFor</a>
+                    <a class="navbar-brand" href="#"><img src="<?php echo base_url();?>images/nb.png" class="bar-icon"/></a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><?php echo anchor('/aluno/calendario', "Calendário"); ?></li>
-                        <li class="active"><?php echo anchor('/aluno/ver_treino', "Treinos"); ?></li>
-                        <li class="active"><?php echo anchor('/aluno/ver_avaliacoes', "Avaliações"); ?></li>
-                        <li class="active"><?php echo anchor('/aluno/logout', 'Logout'); ?></li>
+                        <li class=""><?php echo anchor('/aluno/calendario', "Calendário"); ?></li>
+                        <li class=""><?php echo anchor('/aluno/ver_treino', "Treinos"); ?></li>
+                        <li class=""><?php echo anchor('/aluno/ver_avaliacoes', "Avaliações"); ?></li>
+                        <li class=""><?php echo anchor('/aluno/reset_password', "Alterar Senha"); ?></li>
+                        <li class=""><?php echo anchor('/aluno/logout', 'Logout'); ?></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
@@ -66,11 +68,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">RunFor</a>
+                <a class="navbar-brand" href="#"><img src="<?php echo base_url();?>images/nb.png" class="bar-icon" /></a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><?php echo anchor('/admin/listar_alunos', "Alunos"); ?></li>
+                    <li class=""><?php echo anchor('/admin/listar_alunos', "Alunos"); ?></li>
                     <li><?php echo anchor('/admin/logout', 'Logout'); ?></li>
                 </ul>
             </div><!--/.nav-collapse -->
@@ -78,5 +80,8 @@
     </div>
     <?php endif; ?>
 
-    <div class="main-content">
-        <h1>RunFor</h1>
+    <div class="container" style="padding-top: 50px;">
+
+        <header class='logo-header'>
+            <img src="<?php echo base_url('images/logotipo.png'); ?>" style="width: 250px"/>
+        </header>

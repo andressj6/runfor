@@ -54,12 +54,58 @@ class Aluno extends CI_Controller {
     }
     
     public function forgotpassword(){
-        
+        $this->load->view('templates/header');
+        $this->load->view('aluno/forgotpassword');
+        $this->load->view('templates/footer');
     }
     
     public function forgotpassword_post(){
-        
+        $this->load->view('templates/header');
+        $email = $this->input->post('email');
+        if($this->aluno_model->validate_email($email)){
+            $this->aluno_model->send_recovery_mail($email);
+            $this->load->view('aluno/recovery_success');
+        } else {
+            $this->load->view('aluno/forgotpassword', array( "error" => "Email não encontrado!"));
+        }
+        $this->load->view('templates/footer');
     }
+
+
+    public function reset_password(){
+        if(!$this->check_login()){
+            return;
+        }
+        $this->load->view('templates/header');
+        $this->load->view('aluno/reset_password');
+        $this->load->view('templates/footer');
+    }
+
+    public function reset_password_post(){
+        $aluno = $this->session->userdata('aluno');
+        $res = array();       
+        $senhaAtual = do_hash($this->input->post('senha_atual'));
+        if(strcmp($senhaAtual, do_hash($aluno['senha'])) == 0) {
+            $res['tipo'] = 'danger';
+            $res['msg'] = "A senha atual está incorreta";
+        } else {
+            $novaSenha = $this->input->post('senha');
+            $confirmaSenha = $this->input->post('confirma_senha');
+            if($novaSenha != $confirmaSenha){
+                $res['tipo'] = 'warning';
+                $res['msg'] = "As senhas não conferem.";
+            } else {
+                $this->db->update('alunos', array('senha' => do_hash($novaSenha)), array('id' => $aluno['id']));
+                $res['tipo'] = 'success';
+                $res['msg'] = 'Senha alterada com Sucesso';
+            }
+        }
+        $this->load->view('templates/header');
+        $this->load->view('aluno/reset_password', $res);
+        $this->load->view('templates/footer');
+    }
+
+
     
     /** Cadastro / Edição */
     public function novo(){

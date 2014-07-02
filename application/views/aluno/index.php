@@ -1,22 +1,20 @@
-<table class="table" style="text-align: center" >
+<table class="table tabela-home" style="text-align: center" >
     <tr>
         <td>
             <a href="<?php echo site_url('aluno/ver_treino')?>">
-                <img src="/runfor/images/icone_treinos.jpg" style="width: 200px;"/><br />
-                <span  >Treinos </span>
+                <img src="<?php echo base_url(); ?>images/treinos.png" alt="Treinos" style="width: 200px;"/><br />
             </a>
         </td>
         <td>
             <a href="<?php echo site_url('aluno/ver_avaliacoes')?>">
-                <img src="/runfor/images/icone_avaliacoes.jpg" style="width: 200px;"/>
+                <img src="<?php echo base_url(); ?>images/resultados.png" alt="Resultados" style="width: 200px;"/>
             </a>
         </td>
         <td>
             <a href="<?php echo site_url('aluno/calendario')?>">
-                <img src="/runfor/images/icone_calendario.jpg" style="width: 200px;"/>
+                <img src="<?php echo base_url(); ?>images/calendario.png" alt="Calendário" style="width: 200px;"/>
             </a>
         </td>
     </tr>
 </table>
 
-<?php var_dump($this->session->userdata('aluno')); ?>
