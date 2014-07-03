@@ -1,6 +1,9 @@
+<div class="container form-input-750">
 <h2>Cadastre-se!</h2>
     <?php echo validation_errors(); ?>
-
+    <?php if(isset($error)):?>
+        <div class="alert alert-danger"><?php echo $error; ?></div>
+    <?php endif; ?>
     <?php echo form_open('aluno/form_post') ?>
 
     <h3> Dados de Acesso </h3>
@@ -50,3 +53,4 @@
 	<input type="submit" class="btn btn-default" name="submit" value="Enviar!" />
 
 </form>
+</div>

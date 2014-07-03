@@ -70,6 +70,11 @@ class Aluno_model extends CI_Model {
         return $query->result_array();
     }
 
+    public function get_all_ativos(){
+        $query = $this->db->get_where('alunos', array('ativo' => TRUE));
+        return $query->result_array();
+    }
+
     public function ativar_aluno($id){
         $this->db->update('alunos',array('ativo'=> TRUE), array('id' => $id));
         return true;
@@ -121,10 +126,11 @@ class Aluno_model extends CI_Model {
             'email' => $email
         );
         $query = $this->db->get_where('alunos', $data);
-        return empty($query->row_array());
+        $aluno = $query->row_array();
+        return !empty($aluno);
     }
 
-    public function send_recovery_email($email){
+    public function send_recovery_mail($email){
         $novaSenha = random_string('alnum', 12);
         $aluno = $this->get_aluno_by_email($email);
         $mensagem = <<<EOT
@@ -143,12 +149,18 @@ EOT;
         $this->email->subject('Runfor - Recuperar Senha');
         $this->email->message($mensagem);
         $this->email->send();
-
         $data = array('senha' => do_hash($novaSenha));
         $query = $this->db->update('alunos',$data,array( "id" => $aluno['id']));
 
-
-
     }
 
+    public function get_treino_aluno($id_aluno){
+        $this->load->helper('file');
+        $treinos = get_filenames("./images");
+        foreach ($treinos as $treino) {
+            if($treino === $id_aluno.".png" || $treino === $id_aluno.".jpg" || $treino === $id_aluno.".png") {
+                return $treino;
+            }
+        }
+    }
 }

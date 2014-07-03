@@ -6,6 +6,7 @@
 <?php if(!empty($mensagem)):?>
     <div class="alert alert-success"><?php echo $mensagem; ?></div>
 <?php endif;?>
+<div class="container" style="text-align: left">
 Nome: <?php echo $aluno['nome']; ?> <br/>
 Email: <?php echo $aluno['email']; ?> <br/>
 Telefone: <?php echo $aluno['telefone']; ?> <br/>
@@ -19,18 +20,23 @@ Medicamentos: <?php echo $aluno['medicamento']; ?> <br/>
 Cirurgias: <?php echo $aluno['cirurgia']; ?> <br/>
 Dores: <?php echo $aluno['dores']; ?>
 
+</div>
 <h3>Treino atual:</h3>
 
-<img src="<?php echo base_url("/images/treinos/".$aluno['id']);?>.png" /><br/>
+<img src="<?php echo base_url("/images/treinos/".$this->aluno_model->get_treino_aluno($aluno['id'])); ?>" /><br/>
 
 
 <?php echo form_open_multipart('admin/upload_treino');?>
+<div class="container form-input-350" >
+    <h3>Enviar novo Treino</h3>
 <div class="form-group">
     <label for="treino"></label> <input type="file" name="treino" size="20" />
     <input type="hidden" name="id_aluno" value="<?php echo $aluno['id']; ?>" />
 </div>
 <div class="form-group">
-    <input type="submit" value="upload" class="btn"/>
+    <input type="submit" value="upload" class="btn btn-success"/>
+</div>
+
 </div>
 <hr/>
 <h2>Ultimas 5 Presenças: </h2><br />
@@ -54,6 +60,7 @@ Dores: <?php echo $aluno['dores']; ?>
         <th>Vel. Max Sem Correção</th>
         <th>PACE</th>
         <th>VO<sup>2</sup> Max.</th>
+        <th>Observações</th>
         <th>Editar</th>
         <th>Remover</th>
     </tr>
@@ -67,6 +74,7 @@ Dores: <?php echo $aluno['dores']; ?>
             <td><?php echo $avaliacao['velMaxSemCorrecao']; ?> </td>
             <td><?php echo $avaliacao['pace']; ?> </td>
             <td><?php echo $avaliacao['vo2max']; ?> </td>
+            <td><?php echo $avaliacao['observacoes']; ?> </td>
             <td><?php echo anchor('admin/editar_avaliacao/'.$avaliacao['id'], "Editar"); ?></td>
             <td><?php echo anchor('admin/remover_avaliacao/'.$avaliacao['id'], "Excluir"); ?></td>
         </tr>
@@ -85,6 +93,7 @@ Dores: <?php echo $aluno['dores']; ?>
         <th>Velocidade</th>
         <th>VO<sup>2</sup> Max</th>
         <th>Met. Max</th>
+        <th>Observações</th>
         <th>Editar</th>
         <th>Remover</th>
     </tr>
@@ -98,6 +107,7 @@ Dores: <?php echo $aluno['dores']; ?>
             <td><?php echo $avaliacao['velocidade']; ?></td>
             <td><?php echo $avaliacao['vo2max']; ?></td>
             <td><?php echo $avaliacao['metMax']; ?></td>
+            <td><?php echo $avaliacao['observacoes']; ?> </td>
             <td><?php echo anchor('admin/editar_avaliacao/'.$avaliacao['id'], "Editar"); ?></td>
             <td><?php echo anchor('admin/remover_avaliacao/'.$avaliacao['id'], "Excluir"); ?></td>
         </tr>

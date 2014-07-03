@@ -13,6 +13,10 @@ body {
 	text-align: center;
 }
 
+.container a:visited {
+	
+}
+
 .main-content {
     padding-top: 80px;
     text-align: center;
@@ -49,4 +53,54 @@ header {
 
 .bar-icon {
 	height: 30px;
+}
+
+/*form login*/
+.form-signin {
+	text-align: left;
+  	max-width: 330px;
+  	padding: 15px;
+  	margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+/*form login*/
+
+/*form em geral*/
+
+.form-input-750 {
+	max-width: 750px;
+	text-align: left;
+}
+
+.form-input-350 {
+  max-width: 350px;
+  text-align: left;
 }

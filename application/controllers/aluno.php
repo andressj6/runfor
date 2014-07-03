@@ -11,10 +11,7 @@ class Aluno extends CI_Controller {
 	/** Logins */
 	public function login(){
         $this->load->library('form_validation');
-
-	    $this->load->view('templates/header');
         $this->load->view('aluno/login');
-		$this->load->view('templates/footer');
 	}
     
     public function login_post(){
@@ -33,19 +30,19 @@ class Aluno extends CI_Controller {
             $aluno = $this->aluno_model->get_aluno_by_credentials($email, $senha);
             if(!$aluno){
                 $data['error'] = "Email ou Senha Inválidos";
-                $view = "aluno/login";
+                $this->load->view('aluno/login', $data);
             } else {
                 $aluno = $this->aluno_model->get_aluno_by_id($aluno['id']);
                 $aluno['logged_in'] = true;
                 $this->session->set_userdata('aluno',$aluno);
                 $data['aluno'] = $aluno['nome'];
-                $view = "aluno/index";
+                $this->load->view('templates/header');
+                $this->load->view("aluno/index", $data);
+                $this->load->view('templates/footer');
             }
         }
 	    
-	    $this->load->view('templates/header');
-        $this->load->view($view, $data);
-		$this->load->view('templates/footer');
+	    
     }
 
     public function logout(){
@@ -127,10 +124,15 @@ class Aluno extends CI_Controller {
 
         $this->form_validation->set_rules('nome', 'Usuário', 'required');
         $this->form_validation->set_rules('email', 'E-Mail', 'required');
+        $this->form_validation->set_rules('senha', 'Senha', 'required');
+
 
         if ($this->form_validation->run() === FALSE) {
-            $this->load->view('aluno/user_form');
+            $this->load->view('aluno/user_form');            
+        } else if($this->aluno_model->validate_email($this->input->post('email'))) {
+            $this->load->view('aluno/user_form', array('error' => 'Email Já Cadastrado!' ));
         } else {
+            die();
             $this->aluno_model->save_aluno();
             $this->load->view('aluno/success');
         }

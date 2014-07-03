@@ -25,6 +25,7 @@
             <td><?php echo $avaliacao['velMaxSemCorrecao']; ?> </td>
             <td><?php echo $avaliacao['pace']; ?> </td>
             <td><?php echo $avaliacao['vo2max']; ?> </td>
+            <td><?php echo $avaliacao['observacoes']; ?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>
@@ -41,6 +42,7 @@
         <th>Velocidade</th>
         <th>VO<sup>2</sup> Max</th>
         <th>Met. Max</th>
+        <th>Observações</th>
     </tr>
     </thead>
     <tbody>
@@ -52,6 +54,7 @@
             <td><?php echo $avaliacao['velocidade']; ?></td>
             <td><?php echo $avaliacao['vo2max']; ?></td>
             <td><?php echo $avaliacao['metMax']; ?></td>
+            <td><?php echo $avaliacao['observacoes']; ?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>

@@ -53,7 +53,7 @@ class Avaliacao_model extends CI_Model {
         #VO2Max=12,159+0,032*(D5-150)
         $avaliacao_processada['vo2max'] = 12.159 + 0.032*($avaliacao_processada['distancia'] - 150);
         $avaliacao_processada['metMax'] = $avaliacao_processada['vo2max']/3.5;
-
+        $avaliacao_processada['observacoes'] = $avaliacao['observacoes'];
         return $avaliacao_processada;
     }
 
@@ -76,17 +76,18 @@ class Avaliacao_model extends CI_Model {
         $avaliacao_processada['pace'] = ($avaliacao_processada['velMaxSemCorrecao'] - ((int) $avaliacao_processada['velMaxSemCorrecao'])) * 0.6 + ((int) $avaliacao_processada['velMaxSemCorrecao']);
         #vo2Max = =118,4-(4,77*B4)
         $avaliacao_processada['vo2max'] = 118.4 - (4.77 * $tempo);
-
+        $avaliacao_processada['observacoes'] = $avaliacao['observacoes'];
         return $avaliacao_processada;
 
     }
 
-    public function salvar_avaliacao_3200($aluno_id, $tempo3200, $avaliacao_id = NULL) {
+    public function salvar_avaliacao_3200($aluno_id, $tempo3200, $observacoes, $avaliacao_id = NULL) {
         $data = array (
           'tipo_avaliacao' => 0,
           'data_avaliacao' => date('Y-m-d'),
           'aluno_id' => $aluno_id,
-          '3200_tempo' => $tempo3200
+          '3200_tempo' => $tempo3200,
+          'observacoes' => $observacoes
         );
 
         if(!$avaliacao_id) {
@@ -97,13 +98,14 @@ class Avaliacao_model extends CI_Model {
         return TRUE;
     }
 
-    public function salvar_avaliacao_soccer($aluno_id, $estagio, $frequencia, $avaliacao_id = NULL) {
+    public function salvar_avaliacao_soccer($aluno_id, $estagio, $frequencia, $observacoes, $avaliacao_id = NULL) {
         $data = array(
             'tipo_avaliacao' => 1,
             'data_avaliacao' => date('Y-m-d'),
             'aluno_id' => $aluno_id,
             'soccer_estagio' => $estagio,
-            'soccer_frequencia' => $frequencia
+            'soccer_frequencia' => $frequencia,
+            'observacoes' => $observacoes
         );
 
         if(!$avaliacao_id) {

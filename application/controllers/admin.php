@@ -44,7 +44,7 @@ class Admin extends CI_Controller {
         if(!$this->check_login()){
             return;
         }
-        $data['alunos'] = $this->aluno_model->get_all();
+        $data['alunos'] = $this->aluno_model->get_all_ativos();
 
         $this->load->view("templates/header");
         $this->load->view("admin/list_alunos",$data);
@@ -80,7 +80,7 @@ class Admin extends CI_Controller {
         }
         $id = $this->uri->segment(3); #admin/ativar_aluno/$id
         $this->aluno_model->desativar_aluno($id);
-        $this->session->set_flashdata('mensagem',array('conteudo' => 'Aluno Desativado com Sucesso!', 'tipo' => 'success'));
+        $this->session->set_flashdata('mensagem',array('conteudo' => 'Aluno Excluido com Sucesso!', 'tipo' => 'success'));
         $this->listar_alunos();
     }
 
@@ -96,7 +96,6 @@ class Admin extends CI_Controller {
         $config['max_size']	= '300';
         $config['max_width']  = '1024';
         $config['max_height']  = '768';
-        $config['file_name'] = $idAluno.".png";
         $config['overwrite'] = TRUE;
 
         $this->load->library('upload', $config);
@@ -111,11 +110,45 @@ class Admin extends CI_Controller {
             );
             $this->load->view("templates/footer");
         } else {
+            $this->load->helper('file');
+            $uploadData = $this->upload->data();
+            $treino = read_file($uploadData['full_path']);
+            $treinoAssigned = write_file($uploadData['file_path'].$idAluno.$uploadData['file_ext'], $treino);
+
             $data = array('id_aluno' => $idAluno);
             $this->load->view("templates/header");
             $this->load->view('admin/upload_success', $data);
             $this->load->view("templates/footer");
         }
+    }
+
+    public function multi_upload_treino(){
+        if(!$this->check_login()){
+            return;
+        }
+
+        $idAluno = $this->input->post('id_aluno');
+        $config['upload_path'] = './images/treinos';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size'] = '300';
+        $config['max_width']  = '1024';
+        $config['max_height']  = '768';
+        $config['overwrite'] = TRUE;
+
+        $this->load->library('upload', $config);
+        if ( ! $this->upload->do_upload('treino')) {
+            $this->session->set_flashdata('mensagem',array('conteudo' => 'Ocorreu um erro durante o envio dos treinos. Por favor, tente novamente', 'tipo' => 'danger'));
+        } else {
+            $this->load->helper('file');
+            $uploadData = $this->upload->data();
+            $treino = read_file($uploadData['full_path']);
+            $alunos = $this->input->post('alunos_treinos');
+            foreach($alunos as $aluno){
+                $treinoAssigned = write_file($uploadData['file_path'].$aluno.$uploadData['file_ext'], $treino);
+            }
+            $this->session->set_flashdata('mensagem',array('conteudo' => 'Treinos enviados com Sucesso', 'tipo' => 'success'));
+        }
+        $this->listar_alunos();
     }
 
     public function avaliar_aluno() {
@@ -154,9 +187,9 @@ class Admin extends CI_Controller {
         $data = $this->input->post();
         $id_avaliacao = isset($data['avaliacao_id']) ? $data['avaliacao_id'] : NULL;
         if($data['tipo_avaliacao'] == 0) {
-            $this->avaliacao_model->salvar_avaliacao_3200($data['aluno_id'], $data['3200_tempo'], $id_avaliacao);
+            $this->avaliacao_model->salvar_avaliacao_3200($data['aluno_id'], $data['3200_tempo'], $data['observacoes'], $id_avaliacao);
         } else {
-            $this->avaliacao_model->salvar_avaliacao_soccer($data['aluno_id'], $data['soccer_estagio'], $data['soccer_frequencia'], $id_avaliacao);
+            $this->avaliacao_model->salvar_avaliacao_soccer($data['aluno_id'], $data['soccer_estagio'], $data['soccer_frequencia'], $data['observacoes'], $id_avaliacao);
         }
         $aluno = $this->aluno_model->get_aluno_by_id($data['aluno_id']);
         $this->load->view("templates/header");

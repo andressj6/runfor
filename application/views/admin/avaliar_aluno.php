@@ -22,6 +22,8 @@
     });
 </script>
 
+<div class="container form-input-350">
+
 <?php echo form_open('admin/save_avaliacao'); ?>
 <input type="hidden" name="aluno_id" value="<?php echo $aluno['id']; ?>"/>
 <?php if(isset($avaliacao)): ?>
@@ -48,7 +50,7 @@ Nome: <?php echo $aluno['nome']; ?> <br/>
 
 <div class="form-group form-3200" <?php if(isset($avaliacao) && $avaliacao['tipo_avaliacao'] == 1): ?>style="display: none;"<?php endif;?>>
     <label for="tempo ">Tempo: </label>
-    <input type="text" name="3200_tempo" value="<?php if(isset($avaliacao) && $avaliacao['tipo_avaliacao'] == 1): echo $avaliacao['3200_tempo']; endif;?>" />
+    <input type="text" name="3200_tempo" class="form-control" value="<?php if(isset($avaliacao) && $avaliacao['tipo_avaliacao'] == 1): echo $avaliacao['3200_tempo']; endif;?>" />
 </div>
 <div class="form-group form-soccer" <?php if(isset($avaliacao) && $avaliacao['tipo_avaliacao'] == 1): ?>style="display: block;"<?php else: ?> style="display: none;"<?php endif;?>>
     <label for="soccer_estagio">Estágio:</label>
@@ -60,7 +62,12 @@ Nome: <?php echo $aluno['nome']; ?> <br/>
     <input type="text" name="soccer_frequencia" class="form-control" value="<?php if(isset($avaliacao) && $avaliacao['tipo_avaliacao'] == 1): echo $avaliacao['soccer_frequencia']; endif;?>"/>
 </div>
 
-
+<div class="form-group">
+  <label for="observacoes">Observações</label>
+  <input type="text" name="observacoes" class="form-control" value="<?php if(isset($avaliacao)): echo $avaliacao['observacoes']; endif; ?>" />
+</div>
 <input type="submit" value="Enviar Avaliação" class="btn btn-success" />
 
 </form>
+
+</div>

@@ -1,5 +1,7 @@
-<h1>Administrativo</h1>
 
+
+<h1>Administrativo</h1>
+<div class="container form-input-750">
 <?php if(isset($error)): ?>
 <div class="alert alert-warning"><?php echo $error; ?> </div>
 <?php endif; ?>
@@ -21,3 +23,4 @@
 </div>
 
 </form>
+</div>
