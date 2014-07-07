@@ -165,8 +165,12 @@ class Aluno extends CI_Controller {
         if(!$this->check_login()){
             return;
         }
+
+        $dataTreino = $this->input->post('data_treino');
+        $data = date('Y-m-d', strtotime($dataTreino));
+
         $aluno = $this->session->userdata('aluno');
-        $presenca = $this->aluno_model->add_presenca($aluno['id']);
+        $presenca = $this->aluno_model->add_presenca($aluno['id'], $data_treino);
         array_push($aluno['presencas'], $presenca);
         $this->session->set_userdata('aluno', $aluno);
         $this->load->view('templates/header');

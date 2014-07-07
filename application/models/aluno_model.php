@@ -109,10 +109,10 @@ class Aluno_model extends CI_Model {
         return $presencas;
     }
 
-    public function add_presenca($idAluno){
+    public function add_presenca($idAluno, $data_presenca){
         $data = array (
             'aluno_id' => $idAluno,
-            'data_presenca' => date("Y-m-d", time())
+            'data_presenca' => $data_presenca
         );
         $query = $this->db->insert('presencas_alunos', $data);
         return $data;

@@ -17,8 +17,11 @@
 
 <img src="<?php echo base_url("/images/treinos/".$aluno['id']);?>.png" /><br/>
 
-<?php if(!$treinouHoje):?>
-<a class="btn btn-success" href="<?php echo site_url('aluno/treinar'); ?>">Treinei Hoje!</a>
-<?php else: ?>
-<button class="btn btn-success" disabled>Já Treinei!</button>
-<?php endif; ?>
+<?php echo form_open_multipart('aluno/treinar');?>
+<h3>Adicionar Treino</h3>
+<div class="form-group">
+    <label for="data_treino" class="control-label">Data:</label>
+    <input type="text" class="form-control" name="data_treino" style="width: 300px;" />
+    <input type="submit" value="Salvar" class="btn btn-success" />
+</div>
+</form>
